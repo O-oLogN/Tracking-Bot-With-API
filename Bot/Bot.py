@@ -157,6 +157,10 @@ def tracking():
 
 #------------------------------ Triggering new thread   ---------------------------------
 
+@app.route('/', methods=['GET'])
+def hello():
+    return "Hello", 200
+
 @app.route('/start')
 def start_tracking_thread():
     global tracking_thread, stop_tracking_thread
