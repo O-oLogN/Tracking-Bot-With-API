@@ -20,8 +20,6 @@ import threading
 
 import time
 
-import sys
-
 import os
 
             #################### Constants here ####################
