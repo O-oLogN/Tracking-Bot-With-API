@@ -41,53 +41,6 @@ tracking_thread = None
 
 stop_tracking_thread = False
 
-infoFile = open(INFO_FILE_PATH, "r")
-
-info = infoFile.read().split()
-
-username = info[0]
-
-password = info[1]
-
-options = Options()
-
-options.add_experimental_option("detach", True)
-
-options.add_argument("--disable-notifications")
-
-options.add_argument("--enable-javascript")
-
-options.add_argument("--user-agent=Chrome/90.0.4430.212")
-
-options.add_argument("--disable-features=RendererCodeIntegrity")
-
-options.add_argument("--headless")
-
-driver = webdriver.Chrome(options)
-
-# driver.maximize_window()
-
-driver.get(WEB_PATH)
-
-WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
-    (By.XPATH, "/html/body/div[1]/div[1]/div[1]/div/div/div/div[2]/div/div[1]/form/div[2]/button")))
-
-driver.find_element(By.NAME, "email").send_keys(username, Keys.ESCAPE)
-
-driver.find_element(By.NAME, "pass").send_keys(password, Keys.ENTER)
-
-WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
-    (By.CLASS_NAME, "xe3v8dz")))        # wait for the presence of main page
-
-driver.get(info[2])     # Access the main page
-
-WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
-    (By.CLASS_NAME, "x1n2onr6.x1ja2u2z.x78zum5.x2lah0s.xl56j7k.x6s0dn4.xozqiw3.x1q0g3np.xi112ho.x17zwfj4.x585lrc.x1403ito.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.xn6708d.x1ye3gou.xtvsq51.x1r1pt67")))        # wait for the presence of "Nhắn tin" button
-
-driver.find_element(By.CLASS_NAME, "x1n2onr6.x1ja2u2z.x78zum5.x2lah0s.xl56j7k.x6s0dn4.xozqiw3.x1q0g3np.xi112ho.x17zwfj4.x585lrc.x1403ito.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.xn6708d.x1ye3gou.xtvsq51.x1r1pt67").click()
-WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
-    (By.CLASS_NAME, "x5yr21d.x1uvtmcs")))   # wait for the presence of message window
-
 currentSessionDayMonthYear = ""
 
 nameDayInTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -107,6 +60,55 @@ def GetSaveFileName():
     return strFileName
 
 def tracking():
+
+    infoFile = open(INFO_FILE_PATH, "r")
+
+    info = infoFile.read().split()
+
+    username = info[0]
+
+    password = info[1]
+
+    options = Options()
+
+    options.add_experimental_option("detach", True)
+
+    options.add_argument("--disable-notifications")
+
+    options.add_argument("--enable-javascript")
+
+    options.add_argument("--user-agent=Chrome/90.0.4430.212")
+
+    options.add_argument("--disable-features=RendererCodeIntegrity")
+
+    options.add_argument("--headless")
+
+    driver = webdriver.Chrome(options)
+
+    # driver.maximize_window()
+
+    driver.get(WEB_PATH)
+
+    WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
+        (By.XPATH, "/html/body/div[1]/div[1]/div[1]/div/div/div/div[2]/div/div[1]/form/div[2]/button")))
+
+    driver.find_element(By.NAME, "email").send_keys(username, Keys.ESCAPE)
+
+    driver.find_element(By.NAME, "pass").send_keys(password, Keys.ENTER)
+
+    WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
+        (By.CLASS_NAME, "xe3v8dz")))        # wait for the presence of main page
+
+    driver.get(info[2])     # Access the main page
+
+    WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
+        (By.CLASS_NAME, "x1n2onr6.x1ja2u2z.x78zum5.x2lah0s.xl56j7k.x6s0dn4.xozqiw3.x1q0g3np.xi112ho.x17zwfj4.x585lrc.x1403ito.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.xn6708d.x1ye3gou.xtvsq51.x1r1pt67")))        # wait for the presence of "Nhắn tin" button
+
+    driver.find_element(By.CLASS_NAME, "x1n2onr6.x1ja2u2z.x78zum5.x2lah0s.xl56j7k.x6s0dn4.xozqiw3.x1q0g3np.xi112ho.x17zwfj4.x585lrc.x1403ito.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.xn6708d.x1ye3gou.xtvsq51.x1r1pt67").click()
+    WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
+        (By.CLASS_NAME, "x5yr21d.x1uvtmcs")))   # wait for the presence of message window
+
+
     global stop_tracking_thread
     while not stop_tracking_thread:
         # saveFileName = GetSaveFileName()
@@ -187,4 +189,6 @@ def retrieve_result():
         }), 404
     
 
-
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
