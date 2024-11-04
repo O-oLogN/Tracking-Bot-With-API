@@ -184,7 +184,9 @@ def retrieve_result():
     tracking_thread = None
     try: 
         # with open(TRACKING_FILE_PATH, "r") as file:
-        with open("Info\\Info.txt", "r") as file:
+        base_dir = os.path.dirname(os.path.abspath(__file__))  # Project root directory
+        info_file_path = os.path.join(base_dir, "Info", "Info.txt")
+        with open(info_file_path) as file:
             file_content = file.read()        
         return jsonify({
             "message": "Tracking thread stopped, retrieving result",
