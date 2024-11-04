@@ -18,6 +18,8 @@ from datetime import datetime
 
 import chromedriver_autoinstaller
 
+import chromedriver_binary
+
 import threading
 
 import time
@@ -84,7 +86,7 @@ def tracking():
     options.add_argument("--disable-gpu")
     options.add_argument("--remote-debugging-port=9222")
 
-    options.binary_location = "/app/.apt/usr/bin/google-chrome"
+    options.binary_location = "/app/.apt/opt/google/chrome/chrome"
     
     driver = webdriver.Chrome(options=options)
 
