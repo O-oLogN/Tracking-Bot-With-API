@@ -12,12 +12,6 @@ from selenium.webdriver.common.keys import Keys
 
 from selenium.common.exceptions import NoSuchElementException
 
-from webdriver_manager.chrome import ChromeDriverManager
-
-from selenium.webdriver.chrome.service import Service
-
-from selenium.webdriver.chrome.options import Options
-
 from flask import Flask, jsonify
 
 from datetime import datetime
@@ -85,7 +79,7 @@ def tracking():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    driver = webdriver.Chrome(options=options)
 
     # driver.maximize_window()  
 
