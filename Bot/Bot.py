@@ -185,9 +185,8 @@ def retrieve_result():
         tracking_thread.join()    
     tracking_thread = None
     try: 
-        # base_dir = os.path.dirname(os.path.abspath(__file__))  # Project root directory
-        # info_file_path = os.path.join(os.path.dirname(__file__), "Info", "Info.txt")
-        # print(f"INFO_FILE_PATH: {info_file_path}")
+        info_file_path = os.path.join(ROOT_DIR, "Info", "Info.txt")
+        print(f"INFO_FILE_PATH: {info_file_path}")
 
         with open(TRACKING_FILE_PATH, "r") as file:
             file_content = file.read()        
