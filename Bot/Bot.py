@@ -85,7 +85,7 @@ def tracking():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager(driver_version="130.0.6723.91").install()), options=options)
 
     # driver.maximize_window()
 
