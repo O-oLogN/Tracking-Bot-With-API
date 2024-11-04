@@ -38,6 +38,8 @@ INFO_FILE_PATH = os.path.join(ROOT_DIR, "Info", "Info.txt")
 
 WEB_PATH = "https://www.facebook.com"
 
+CHROME_DRIVER_VERSION = "130.0.6723.91"
+
 
             #######################################################
 
@@ -85,7 +87,7 @@ def tracking():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager(driver_version="130.0.6723.91").install()), options=options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager(driver_version=CHROME_DRIVER_VERSION).install()), options=options)
 
     # driver.maximize_window()
 
