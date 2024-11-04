@@ -120,7 +120,7 @@ def tracking():
         latestSessionDayMonthYear = ""
         with open(TRACKING_FILE_PATH, "r") as tracking_file:
             line = tracking_file.readline()
-            while (line and line.startswith(sessionInDay)):
+            while (line and line.startswith(tuple(sessionInDay))):
                 latestSessionDayMonthYear = line.strip()
                 line = tracking_file.readline()
         
