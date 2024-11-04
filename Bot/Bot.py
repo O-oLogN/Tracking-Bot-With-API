@@ -83,9 +83,9 @@ def tracking():
 
     options.add_argument("--headless")
 
-    options.add_argument("--no-sandbox")  # Bypass OS security model
+    # options.add_argument("--no-sandbox")  # Bypass OS security model
 
-    options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+    # options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
 
 
     driver = webdriver.Chrome(options)
@@ -192,7 +192,7 @@ def retrieve_result():
             file_content = file.read()        
         return jsonify({
             "message": "Tracking thread stopped, retrieving result",
-            "": file_content
+            "content": file_content
         }), 200
     except FileNotFoundError:
         return jsonify({
