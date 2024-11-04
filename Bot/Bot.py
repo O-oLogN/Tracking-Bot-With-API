@@ -81,8 +81,6 @@ def tracking():
 
     options.add_argument("--headless")
 
-    options.add_argument("--headless")  # Enable headless mode
-
     options.add_argument("--no-sandbox")  # Bypass OS security model
 
     options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
@@ -185,7 +183,8 @@ def retrieve_result():
         tracking_thread.join()    
     tracking_thread = None
     try: 
-        with open(TRACKING_FILE_PATH, "r") as file:
+        # with open(TRACKING_FILE_PATH, "r") as file:
+        with open("Info\\Info.txt", "r") as file:
             file_content = file.read()        
         return jsonify({
             "message": "Tracking thread stopped, retrieving result",
