@@ -70,25 +70,15 @@ def tracking():
     password = info[1]
 
     options = Options()
-
-    options.add_experimental_option("detach", True)
-
     options.add_argument("--disable-notifications")
-
     options.add_argument("--enable-javascript")
-
-    options.add_argument("--user-agent=Chrome/90.0.4430.212")
-
+    options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36")  # Updated user-agent
     options.add_argument("--disable-features=RendererCodeIntegrity")
-
     options.add_argument("--headless")
-
-    # options.add_argument("--no-sandbox")  # Bypass OS security model
-
-    # options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
-
-
-    driver = webdriver.Chrome(options)
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    
+    driver = webdriver.Chrome(options=options)
 
     # driver.maximize_window()
 
