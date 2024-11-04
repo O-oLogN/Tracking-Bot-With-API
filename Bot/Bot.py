@@ -185,7 +185,9 @@ def retrieve_result():
     try: 
         # with open(TRACKING_FILE_PATH, "r") as file:
         base_dir = os.path.dirname(os.path.abspath(__file__))  # Project root directory
-        info_file_path = os.path.join(base_dir, "Info", "Info.txt")
+        info_file_path = os.path.join(os.path.dirname(__file__), "Info", "Info.txt")
+        print(f"INFO_FILE_PATH: {info_file_path}")
+
         with open(info_file_path) as file:
             file_content = file.read()        
         return jsonify({
