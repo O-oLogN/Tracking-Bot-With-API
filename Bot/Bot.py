@@ -87,7 +87,7 @@ def tracking():
     
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-    # driver.maximize_window()  #
+    # driver.maximize_window()  
 
     driver.get(WEB_PATH)
 
