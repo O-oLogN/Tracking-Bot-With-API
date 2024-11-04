@@ -24,7 +24,7 @@ import os
 
             #################### Constants here ####################
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 TRACKING_FILE_PATH = os.path.join(ROOT_DIR, "Curr", "tracking.txt")
 
@@ -186,7 +186,7 @@ def retrieve_result():
     tracking_thread = None
     try: 
         info_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Info", "Info.txt")
-        print(f"INFO_FILE_PATH: {info_file_path}")
+        print(f"INFO_FILE_PATH: {info_file_path}")      # For showing dirname
 
         with open(TRACKING_FILE_PATH, "r") as file:
             file_content = file.read()        
