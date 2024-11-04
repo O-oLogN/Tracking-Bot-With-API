@@ -24,9 +24,11 @@ import os
 
             #################### Constants here ####################
 
-TRACKING_FILE_PATH = "Curr\\tracking.txt"
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-INFO_FILE_PATH = "Info\\Info.txt"
+TRACKING_FILE_PATH = os.path.join(ROOT_DIR, "Curr", "tracking.txt")
+
+INFO_FILE_PATH = os.path.join(ROOT_DIR, "Info", "Info.txt")
 
 WEB_PATH = "https://www.facebook.com"
 
@@ -183,12 +185,11 @@ def retrieve_result():
         tracking_thread.join()    
     tracking_thread = None
     try: 
-        # with open(TRACKING_FILE_PATH, "r") as file:
-        base_dir = os.path.dirname(os.path.abspath(__file__))  # Project root directory
-        info_file_path = os.path.join(os.path.dirname(__file__), "Info", "Info.txt")
-        print(f"INFO_FILE_PATH: {info_file_path}")
+        # base_dir = os.path.dirname(os.path.abspath(__file__))  # Project root directory
+        # info_file_path = os.path.join(os.path.dirname(__file__), "Info", "Info.txt")
+        # print(f"INFO_FILE_PATH: {info_file_path}")
 
-        with open(info_file_path) as file:
+        with open(TRACKING_FILE_PATH, "r") as file:
             file_content = file.read()        
         return jsonify({
             "message": "Tracking thread stopped, retrieving result",
