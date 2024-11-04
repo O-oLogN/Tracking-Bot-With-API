@@ -12,13 +12,15 @@ from selenium.webdriver.common.keys import Keys
 
 from selenium.common.exceptions import NoSuchElementException
 
+from webdriver_manager.chrome import ChromeDriverManager
+
+from selenium.webdriver.chrome.service import Service
+
+from selenium.webdriver.chrome.options import Options
+
 from flask import Flask, jsonify
 
 from datetime import datetime
-
-import chromedriver_autoinstaller
-
-import chromedriver_binary
 
 import threading
 
@@ -73,8 +75,6 @@ def tracking():
 
     password = info[1]
 
-    chromedriver_autoinstaller.install()
-
     options = Options()
     options.add_argument("--disable-notifications")
     options.add_argument("--enable-javascript")
@@ -88,7 +88,7 @@ def tracking():
 
     options.binary_location = "/app/.apt/opt/google/chrome/chrome"
     
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
     # driver.maximize_window()
 
