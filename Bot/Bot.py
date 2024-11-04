@@ -41,6 +41,8 @@ WEB_PATH = "https://www.facebook.com"
 
             #######################################################
 
+os.environ['PATH'] += ":/app/.apt/usr/bin"
+
 app = Flask(__name__)
 
 tracking_thread = None
