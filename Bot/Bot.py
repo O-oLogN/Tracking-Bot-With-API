@@ -83,6 +83,8 @@ def tracking():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     options.add_argument("--remote-debugging-port=9222")
+
+    options.binary_location = "/app/.apt/usr/bin/google-chrome"
     
     driver = webdriver.Chrome(options=options)
 
