@@ -41,8 +41,6 @@ WEB_PATH = "https://www.facebook.com"
 
             #######################################################
 
-os.environ['PATH'] += ":/app/.apt/usr/bin"
-
 app = Flask(__name__)
 
 tracking_thread = None
@@ -87,8 +85,6 @@ def tracking():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     options.add_argument("--remote-debugging-port=9222")
-
-    options.binary_location = "/app/.apt/opt/google/chrome/chrome"
     
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
@@ -189,6 +185,8 @@ def retrieve_result():
     try: 
         info_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Info", "Info.txt")
         print(f"INFO_FILE_PATH: {info_file_path}")      # For showing dirname
+
+        
 
         with open(TRACKING_FILE_PATH, "r") as file:
             file_content = file.read()        
