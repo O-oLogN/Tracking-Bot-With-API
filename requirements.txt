@@ -1,1 +1,4 @@
 Flask==2.3.2
+selenium
+
+chromedriver-autoinstaller

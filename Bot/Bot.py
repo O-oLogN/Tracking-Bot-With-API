@@ -81,6 +81,13 @@ def tracking():
 
     options.add_argument("--headless")
 
+    options.add_argument("--headless")  # Enable headless mode
+
+    options.add_argument("--no-sandbox")  # Bypass OS security model
+
+    options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+
+
     driver = webdriver.Chrome(options)
 
     # driver.maximize_window()
@@ -193,4 +200,4 @@ def retrieve_result():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(port = port)
