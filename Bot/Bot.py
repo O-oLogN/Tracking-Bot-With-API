@@ -16,6 +16,8 @@ from flask import Flask, jsonify
 
 from datetime import datetime
 
+import chromedriver_autoinstaller
+
 import threading
 
 import time
@@ -69,6 +71,8 @@ def tracking():
 
     password = info[1]
 
+    chromedriver_autoinstaller.install()
+
     options = Options()
     options.add_argument("--disable-notifications")
     options.add_argument("--enable-javascript")
@@ -77,6 +81,8 @@ def tracking():
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--remote-debugging-port=9222")
     
     driver = webdriver.Chrome(options=options)
 
