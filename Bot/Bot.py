@@ -81,8 +81,6 @@ def tracking():
     
     driver = webdriver.Chrome(options=options)
 
-    print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDWWWWWWWWWWWWWWWWWWWWWWWWWWW")
-
     # driver.maximize_window()  
 
     driver.get(WEB_PATH)
@@ -110,6 +108,8 @@ def tracking():
     global stop_tracking_thread
     while not stop_tracking_thread:
         # saveFileName = GetSaveFileName()
+
+        print("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
         now = datetime.now()
 
