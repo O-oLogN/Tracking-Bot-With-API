@@ -57,8 +57,8 @@ def GetSaveFileName():
     currentDayInMonth = now.day
     currentMonth = now.month
     currentYear = now.year
-    strFileName = f"{nameDayInTheWeek[currentDayInWeek]}-{sessionInDay[int((int(currentTime[:2]) * 60 + int(currentTime[3:5])) / 360)]}({currentDayInMonth}-{currentMonth})"
-    currentSessionDayMonthYear = f"{sessionInDay[int((int(currentTime[:2]) * 60 + int(currentTime[3:5])) / 360)]}-{nameDayInTheWeek[currentDayInWeek]}-{currentDayInMonth}-{currentMonth}-{currentYear}"
+    strFileName = f"{nameDayInTheWeek[currentDayInWeek]}-{sessionInDay[int(((int(currentTime[:2])) * 60 + int(currentTime[3:5])) / 360)]}({currentDayInMonth}-{currentMonth})"
+    currentSessionDayMonthYear = f"{sessionInDay[int(((int(currentTime[:2])) * 60 + int(currentTime[3:5])) / 360)]}-{nameDayInTheWeek[currentDayInWeek]}-{currentDayInMonth}-{currentMonth}-{currentYear}"
     return strFileName
 
 def tracking():
@@ -100,9 +100,7 @@ def tracking():
     WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
         (By.CLASS_NAME, "xe3v8dz")))        # wait for the presence of main page
 
-    # driver.get(info[2])     # Access the main page
-
-    driver.get("https://www.facebook.com/pham.yuuki24")
+    driver.get(info[2])     # Access the main page
 
     WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
         (By.CLASS_NAME, "x1n2onr6.x1ja2u2z.x78zum5.x2lah0s.xl56j7k.x6s0dn4.xozqiw3.x1q0g3np.xi112ho.x17zwfj4.x585lrc.x1403ito.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.xn6708d.x1ye3gou.xtvsq51.x1r1pt67")))        # wait for the presence of "Nhắn tin" button
@@ -161,7 +159,7 @@ def tracking():
         # os.system(f'type "{TRACKING_FILE_PATH}" > "{newFilePath}"')
         #     # Copy data from tracking.txt to saveFileName.txt
 
-        time.sleep(1)
+        time.sleep(120)
 
 #------------------------------ Triggering new thread   ---------------------------------
 
@@ -187,9 +185,42 @@ def start_tracking_thread():
 
 @app.route('/result')
 def retrieve_result():
+    allowed_ranges = [
+        (5, 55, 6, 5),
+        (11, 55, 12, 5),
+        (17, 55, 18, 5),
+        (23, 55, 0, 5)
+    ]
+
+    # Get the current time
+    now = datetime.now()
+    current_hour = now.hour
+    current_minute = now.minute
+
+    # Function to check if current time is within any of the allowed ranges
+    def is_within_allowed_range():
+        for start_hour, start_min, end_hour, end_min in allowed_ranges:
+            if start_hour <= current_hour <= end_hour:
+                if start_hour == end_hour:
+                    # Single hour range
+                    return start_min <= current_minute <= end_min
+                elif current_hour == start_hour:
+                    return current_minute >= start_min
+                elif current_hour == end_hour:
+                    return current_minute <= end_min
+                else:
+                    return True
+        return False
+
+    # Check if current time falls within allowed ranges
+    if not is_within_allowed_range():
+        return jsonify({
+            "message": "Access to this resource is restricted outside the allowed time windows."
+        }), 403
+    
     try: 
         info_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Info", "Info.txt")
-        print(f"INFO_FILE_PATH: {info_file_path}")      # For showing dirname
+        print(f"INFO_FILE_PATH: {info_file_path}")      # For debugging: show dirname
 
         with open(TRACKING_FILE_PATH, "r") as file:
             file_content = file.read()        
