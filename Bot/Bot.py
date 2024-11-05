@@ -183,11 +183,6 @@ def start_tracking_thread():
 
 @app.route('/result')
 def retrieve_result():
-    global stop_tracking_thread, tracking_thread
-    stop_tracking_thread = True
-    if tracking_thread is not None and tracking_thread.is_alive():
-        tracking_thread.join()    
-    tracking_thread = None
     try: 
         info_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Info", "Info.txt")
         print(f"INFO_FILE_PATH: {info_file_path}")      # For showing dirname
@@ -195,12 +190,12 @@ def retrieve_result():
         with open(TRACKING_FILE_PATH, "r") as file:
             file_content = file.read()        
         return jsonify({
-            "message": "Tracking thread stopped, retrieving result",
+            "message": "Tracking thread still in progress, retrieving result",
             "content": file_content
         }), 200
     except FileNotFoundError:
         return jsonify({
-            "message": "Tracking thread stopped, but tracking file was not found.",
+            "message": "Tracking thread still in progress, but tracking file was not found.",
             "file": None
         }), 404
     
