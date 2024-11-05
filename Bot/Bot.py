@@ -102,7 +102,6 @@ def tracking():
     WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
         (By.CLASS_NAME, "xe3v8dz")))        # wait for the presence of main page
     
-    driver.save_screenshot(SCREENSHOT_PATH)
 
     driver.get(info[2])     # Access the main page
 
@@ -113,7 +112,9 @@ def tracking():
     WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
         (By.CLASS_NAME, "x5yr21d.x1uvtmcs")))   # wait for the presence of message window
 
-    global stop_tracking_thread
+    driver.save_screenshot(SCREENSHOT_PATH)
+    
+    global stop_tracking_thread, latestSessionDayMonthYear
     while not stop_tracking_thread:
         saveFileName = GetSaveFileName()    # NOTE: Although saveFileName is not used but GetSaveFileName()
                                             # should be called to update currentSessionDayMonthYear
