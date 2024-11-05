@@ -223,7 +223,10 @@ def retrieve_result():
         print(f"INFO_FILE_PATH: {info_file_path}")      # For debugging: show dirname
 
         with open(TRACKING_FILE_PATH, "r") as file:
-            file_content = file.read()        
+            file_content = file.read()  
+        with open(TRACKING_FILE_PATH, "w") as file:
+            file = file.truncate()
+            
         return jsonify({
             "message": "Tracking thread still in progress, retrieving result",
             "content": file_content
