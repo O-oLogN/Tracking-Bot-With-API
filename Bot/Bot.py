@@ -37,10 +37,6 @@ WEB_PATH = "https://www.facebook.com"
 
             #######################################################
 
-display = Display(visible=True, size=(1920, 1080))
-
-display.start()            
-
 app = Flask(__name__)
 
 tracking_thread = None
@@ -66,6 +62,10 @@ def GetSaveFileName():
     return strFileName
 
 def tracking():
+
+    display = Display(visible=True, size=(1920, 1080))
+
+    display.start()            
 
     infoFile = open(INFO_FILE_PATH, "r")
 
