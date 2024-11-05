@@ -133,7 +133,7 @@ def tracking():
                     line = tracking_file.readline()
             
         if currentSessionDayMonthYear != latestSessionDayMonthYear:
-            tracking_file = open(TRACKING_FILE_PATH, "w")
+            tracking_file = open(TRACKING_FILE_PATH, "a")
             tracking_file.write(currentSessionDayMonthYear + "\n")
             latestSessionDayMonthYear = currentSessionDayMonthYear
         tracking_file.close()        
