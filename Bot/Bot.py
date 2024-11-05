@@ -1,7 +1,5 @@
 from selenium import webdriver
 
-from pyvirtualdisplay.display import Display
-
 from selenium.webdriver.chrome.options import Options
 
 from selenium.webdriver.support.wait import WebDriverWait
@@ -14,7 +12,7 @@ from selenium.webdriver.common.keys import Keys
 
 from selenium.common.exceptions import NoSuchElementException
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_file
 
 from datetime import datetime
 
@@ -33,6 +31,8 @@ TRACKING_FILE_PATH = os.path.join(ROOT_DIR, "Curr", "tracking.txt")
 INFO_FILE_PATH = os.path.join(ROOT_DIR, "Info", "Info.txt")
 
 WEB_PATH = "https://www.facebook.com"
+
+SCREENSHOT_PATH = os.path.join(ROOT_DIR, "Curr", "temp.png")
 
 
             #######################################################
@@ -63,10 +63,6 @@ def GetSaveFileName():
 
 def tracking():
 
-    display = Display(backend="xvfb", visible=True, size=(1920, 1080))
-
-    display.start()            
-
     infoFile = open(INFO_FILE_PATH, "r")
 
     info = infoFile.read().split()
@@ -92,7 +88,7 @@ def tracking():
 
     driver.get(WEB_PATH)
 
-    print(driver.page_source)
+    driver.save_screenshot(SCREENSHOT_PATH)
 
     WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
         (By.XPATH, "/html/body/div[1]/div[1]/div[1]/div/div/div/div[2]/div/div[1]/form/div[2]/button")))
@@ -118,7 +114,6 @@ def tracking():
     global stop_tracking_thread
     while not stop_tracking_thread:
         # saveFileName = GetSaveFileName()
-
 
         now = datetime.now()
 
@@ -169,6 +164,13 @@ def tracking():
 @app.route('/', methods=['GET'])
 def hello():
     return "Hello", 200
+
+@app.route("/pic", methods=['GET'])
+def download():
+    try:
+        return send_file(SCREENSHOT_PATH, as_attachment=True)
+    except FileNotFoundError:
+        return "Screenshot not found", 404
 
 @app.route('/start')
 def start_tracking_thread():
