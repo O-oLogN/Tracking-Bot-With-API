@@ -198,7 +198,7 @@ def retrieve_result():
     current_minute = now.minute
 
     # Function to check if current time is within any of the allowed ranges
-    def is_within_allowed_range():
+    def is_within_disallowed_range():
         for start_hour, start_min, end_hour, end_min in allowed_ranges:
             if start_hour <= current_hour <= end_hour:
                 if start_hour == end_hour:
@@ -209,11 +209,11 @@ def retrieve_result():
                 elif current_hour == end_hour:
                     return current_minute <= end_min
                 else:
-                    return True
+                    return False
         return False
 
     # Check if current time falls within allowed ranges
-    if not is_within_allowed_range():
+    if is_within_disallowed_range():
         return jsonify({
             "message": "Access to this resource is restricted outside the allowed time windows."
         }), 403
