@@ -85,9 +85,12 @@ def tracking():
 
     driver.get(WEB_PATH)
 
+    print(driver.page_source)
+
     WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
         (By.XPATH, "/html/body/div[1]/div[1]/div[1]/div/div/div/div[2]/div/div[1]/form/div[2]/button")))
 
+    print("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     driver.find_element(By.NAME, "email").send_keys(username, Keys.ESCAPE)
 
     driver.find_element(By.NAME, "pass").send_keys(password, Keys.ENTER)
@@ -109,7 +112,6 @@ def tracking():
     while not stop_tracking_thread:
         # saveFileName = GetSaveFileName()
 
-        print("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
         now = datetime.now()
 
@@ -180,8 +182,6 @@ def retrieve_result():
     try: 
         info_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Info", "Info.txt")
         print(f"INFO_FILE_PATH: {info_file_path}")      # For showing dirname
-
-        
 
         with open(TRACKING_FILE_PATH, "r") as file:
             file_content = file.read()        
