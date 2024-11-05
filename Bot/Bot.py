@@ -92,8 +92,6 @@ def tracking():
 
     driver.get(WEB_PATH)
 
-    driver.save_screenshot(SCREENSHOT_PATH)
-
     # WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
     #     (By.XPATH, "/html/body/div[1]/div[1]/div[1]/div/div/div/div[2]/div/div[1]/form/div[2]/button")))
 
@@ -103,6 +101,8 @@ def tracking():
 
     WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
         (By.CLASS_NAME, "xe3v8dz")))        # wait for the presence of main page
+    
+    driver.save_screenshot(SCREENSHOT_PATH)
 
     driver.get(info[2])     # Access the main page
 
