@@ -34,7 +34,7 @@ WEB_PATH = "https://www.facebook.com"
 
 SCREENSHOT_PATH = os.path.join(ROOT_DIR, "Curr", "temp.png")
 
-SLEEP_TIME = 1
+SLEEP_TIME = 60
 
 
             #######################################################
@@ -113,7 +113,7 @@ def tracking():
         (By.CLASS_NAME, "x5yr21d.x1uvtmcs")))   # wait for the presence of message window
 
     driver.save_screenshot(SCREENSHOT_PATH)
-    
+
     global stop_tracking_thread, latestSessionDayMonthYear
     while not stop_tracking_thread:
         saveFileName = GetSaveFileName()    # NOTE: Although saveFileName is not used but GetSaveFileName()
@@ -188,39 +188,6 @@ def start_tracking_thread():
 
 @app.route('/result')
 def retrieve_result():
-    allowed_ranges = [
-        (5, 55, 6, 5),
-        (11, 55, 12, 5),
-        (17, 55, 18, 5),
-        (23, 55, 0, 5)
-    ]
-
-    # Get the current time
-    now = datetime.now()
-    current_hour = now.hour
-    current_minute = now.minute
-
-    # Function to check if current time is within any of the allowed ranges
-    def is_within_disallowed_range():
-        for start_hour, start_min, end_hour, end_min in allowed_ranges:
-            if start_hour <= current_hour <= end_hour:
-                if start_hour == end_hour:
-                    # Single hour range
-                    return start_min <= current_minute <= end_min
-                elif current_hour == start_hour:
-                    return current_minute >= start_min
-                elif current_hour == end_hour:
-                    return current_minute <= end_min
-                else:
-                    return False
-        return False
-
-    # Check if current time falls within allowed ranges
-    if is_within_disallowed_range():
-        return jsonify({
-            "message": "Access to this resource is restricted outside the allowed time windows."
-        }), 403
-    
     try: 
         info_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Info", "Info.txt")
         print(f"INFO_FILE_PATH: {info_file_path}")      # For debugging: show dirname
@@ -240,6 +207,39 @@ def retrieve_result():
     
 @app.route('/delete')
 def deleteTrackingFileContent():
+    # allowed_ranges = [
+    #     (5, 55, 6, 5),
+    #     (11, 55, 12, 5),
+    #     (17, 55, 18, 5),
+    #     (23, 55, 0, 5)
+    # ]
+
+    # # Get the current time
+    # now = datetime.now()
+    # current_hour = now.hour
+    # current_minute = now.minute
+
+    # # Function to check if current time is within any of the allowed ranges
+    # def is_within_disallowed_range():
+    #     for start_hour, start_min, end_hour, end_min in allowed_ranges:
+    #         if start_hour <= current_hour <= end_hour:
+    #             if start_hour == end_hour:
+    #                 # Single hour range
+    #                 return start_min <= current_minute <= end_min
+    #             elif current_hour == start_hour:
+    #                 return current_minute >= start_min
+    #             elif current_hour == end_hour:
+    #                 return current_minute <= end_min
+    #             else:
+    #                 return False
+    #     return False
+
+    # # Check if current time falls within disallowed ranges
+    # if is_within_disallowed_range():
+    #     return jsonify({
+    #         "message": "Deleting data is restricted outside the allowed time windows."
+    #     }), 403
+    
     try:
         global latestSessionDayMonthYear
         latestSessionDayMonthYear = ""
