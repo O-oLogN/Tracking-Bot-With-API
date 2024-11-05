@@ -90,8 +90,8 @@ def tracking():
 
     driver.save_screenshot(SCREENSHOT_PATH)
 
-    WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
-        (By.XPATH, "/html/body/div[1]/div[1]/div[1]/div/div/div/div[2]/div/div[1]/form/div[2]/button")))
+    # WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
+    #     (By.XPATH, "/html/body/div[1]/div[1]/div[1]/div/div/div/div[2]/div/div[1]/form/div[2]/button")))
 
     print("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     driver.find_element(By.NAME, "email").send_keys(username, Keys.ESCAPE)
