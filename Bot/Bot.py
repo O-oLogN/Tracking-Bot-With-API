@@ -102,7 +102,7 @@ def tracking():
 
     # driver.get(info[2])     # Access the main page
 
-    driver.get("https://www.facebook.com/doanchinhit2102")
+    driver.get("https://www.facebook.com/pham.yuuki24")
 
     WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
         (By.CLASS_NAME, "x1n2onr6.x1ja2u2z.x78zum5.x2lah0s.xl56j7k.x6s0dn4.xozqiw3.x1q0g3np.xi112ho.x17zwfj4.x585lrc.x1403ito.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.xn6708d.x1ye3gou.xtvsq51.x1r1pt67")))        # wait for the presence of "Nhắn tin" button
@@ -111,27 +111,30 @@ def tracking():
     WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
         (By.CLASS_NAME, "x5yr21d.x1uvtmcs")))   # wait for the presence of message window
 
+    latestSessionDayMonthYear = ""
 
     global stop_tracking_thread
     while not stop_tracking_thread:
-        # saveFileName = GetSaveFileName()
-
+        saveFileName = GetSaveFileName()    # NOTE: Although saveFileName is not used but GetSaveFileName()
+                                            # should be called to update currentSessionDayMonthYear
         now = datetime.now()
 
         currentTime = now.strftime("%H:%M")
 
         tracking = open(TRACKING_FILE_PATH, "a")
 
-        latestSessionDayMonthYear = ""
-        with open(TRACKING_FILE_PATH, "r") as tracking_file:
-            line = tracking_file.readline()
-            while (line and line.startswith(tuple(sessionInDay))):
-                latestSessionDayMonthYear = line.strip()
+        if (latestSessionDayMonthYear == ""):
+            with open(TRACKING_FILE_PATH, "r") as tracking_file:
                 line = tracking_file.readline()
-        
+                while (line):
+                    if (line.startswith(tuple(sessionInDay))):
+                        latestSessionDayMonthYear = line.strip()
+                    line = tracking_file.readline()
+            
         if currentSessionDayMonthYear != latestSessionDayMonthYear:
             tracking_file = open(TRACKING_FILE_PATH, "w")
             tracking_file.write(currentSessionDayMonthYear + "\n")
+            latestSessionDayMonthYear = currentSessionDayMonthYear
         tracking_file.close()        
 
         isOnlineStatus = True
