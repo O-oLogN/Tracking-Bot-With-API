@@ -63,7 +63,7 @@ def GetSaveFileName():
 
 def tracking():
 
-    display = Display(visible=True, size=(1920, 1080))
+    display = Display(backend="xvfb", visible=True, size=(1920, 1080))
 
     display.start()            
 
