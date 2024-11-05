@@ -34,6 +34,8 @@ WEB_PATH = "https://www.facebook.com"
 
 SCREENSHOT_PATH = os.path.join(ROOT_DIR, "Curr", "temp.png")
 
+SLEEP_TIME = 1
+
 
             #######################################################
 
@@ -44,6 +46,8 @@ tracking_thread = None
 stop_tracking_thread = False
 
 currentSessionDayMonthYear = ""
+
+latestSessionDayMonthYear = ""
 
 nameDayInTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
@@ -109,8 +113,6 @@ def tracking():
     WebDriverWait(driver, 7200).until(EC.presence_of_all_elements_located(
         (By.CLASS_NAME, "x5yr21d.x1uvtmcs")))   # wait for the presence of message window
 
-    latestSessionDayMonthYear = ""
-
     global stop_tracking_thread
     while not stop_tracking_thread:
         saveFileName = GetSaveFileName()    # NOTE: Although saveFileName is not used but GetSaveFileName()
@@ -159,7 +161,7 @@ def tracking():
         # os.system(f'type "{TRACKING_FILE_PATH}" > "{newFilePath}"')
         #     # Copy data from tracking.txt to saveFileName.txt
 
-        time.sleep(120)
+        time.sleep(SLEEP_TIME)
 
 #------------------------------ Triggering new thread   ---------------------------------
 
@@ -224,9 +226,7 @@ def retrieve_result():
 
         with open(TRACKING_FILE_PATH, "r") as file:
             file_content = file.read()  
-        with open(TRACKING_FILE_PATH, "w") as file:
-            file = file.truncate()
-            
+
         return jsonify({
             "message": "Tracking thread still in progress, retrieving result",
             "content": file_content
@@ -237,6 +237,20 @@ def retrieve_result():
             "file": None
         }), 404
     
+@app.route('/delete')
+def deleteTrackingFileContent():
+    try:
+        global latestSessionDayMonthYear
+        latestSessionDayMonthYear = ""
+        with open(TRACKING_FILE_PATH, "w") as file:
+            file.truncate()
+        return jsonify({
+            "message": "Data in tracking file deleted successfully"
+        }), 200
+    except Exception:
+        return jsonify({
+            "message": "Error occurred while deleting data in tracking file"
+        }), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
