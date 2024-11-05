@@ -1,5 +1,7 @@
 from selenium import webdriver
 
+from pyvirtualdisplay.display import Display
+
 from selenium.webdriver.chrome.options import Options
 
 from selenium.webdriver.support.wait import WebDriverWait
@@ -34,6 +36,10 @@ WEB_PATH = "https://www.facebook.com"
 
 
             #######################################################
+
+display = Display(visible=True, size=(1920, 1080))
+
+display.start()            
 
 app = Flask(__name__)
 
